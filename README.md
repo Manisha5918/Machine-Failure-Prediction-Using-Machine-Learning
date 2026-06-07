@@ -1,9 +1,8 @@
-# AI Predictive Maintenance System using ml
+# Machine Failure Prediction System using Machine Learning
 
-An Machine Learning based Predictive Maintenance application that predicts industrial machine failures using sensor data.
+A Machine Learning based Predictive Maintenance application that predicts industrial machine failures using machine sensor parameters.
 
-The system analyzes machine operating conditions, predicts failure risks using a trained ML model, and provides real-time machine health monitoring through a React dashboard.
-
+The system learns failure patterns from the AI4I 2020 Predictive Maintenance dataset and predicts machine health for new user-provided sensor values through a React dashboard connected with a FastAPI ML backend.
 ---
 
 ##  Project Overview
@@ -12,7 +11,7 @@ Unexpected machine failures cause production downtime and maintenance costs in i
 
 This project solves the problem by using Machine Learning to predict possible machine failures before they occur.
 
-The application takes real-time machine parameters such as:
+The application takes machine sensor parameters such as:
 
 - Air Temperature
 - Process Temperature
@@ -32,14 +31,16 @@ and predicts:
 
 ##  Features
 
-✔ Real-time Machine Failure Prediction  
-✔ Interactive Industrial Monitoring Dashboard  
-✔ Machine Health Visualization  
+✔ Machine Failure Prediction using ML  
+✔ User Input Based Sensor Prediction  
+✔ AI4I Dataset Machine Record Loading  
+✔ Interactive React Monitoring Dashboard  
+✔ Dark / Light Mode Interface  
 ✔ Failure Probability Calculation  
 ✔ Preventive Maintenance Recommendation  
-✔ REST API based ML Integration  
-✔ Multiple ML Model Comparison  
-✔ Feature Importance Analysis  
+✔ FastAPI REST API Model Integration  
+✔ Multiple ML Algorithm Comparison  
+✔ Feature Importance Analysis
 
 
 ---
@@ -56,22 +57,30 @@ and predicts:
 
 
 ```
+AI4I 2020 Dataset
+
+          |
+          ↓
+
+Machine Learning Training
+
+          |
+          ↓
+
+Random Forest Model
+(model.pkl + scaler.pkl)
+
+          |
+          ↓
+
+FastAPI Prediction API
+
+          |
+          ↓
+
 React + TypeScript Dashboard
 
-            |
-            |
-
-FastAPI Backend Server
-
-            |
-            |
-
-Trained Machine Learning Model
-
-            |
-            |
-
-Industrial Sensor Dataset
+(User Input + Prediction Result)
 ```
 
 ---
@@ -234,21 +243,33 @@ The trained machine learning model is loaded using Joblib and connected with RES
 ## API Endpoint
 
 
+### Fetch Dataset Machine Sample
+
+```bash
+GET /machine
 ```
+
+Fetches machine records from the AI4I dataset.
+
+
+### Predict Machine Condition
+
+```bash
 POST /predict
 ```
 
+Accepts machine sensor values and predicts machine health
 
 Input Example:
 
 
 ```json
 {
-  "air_temperature":345,
-  "process_temperature":360,
-  "rotational_speed":1200,
-  "torque":75,
-  "tool_wear":220
+  "air_temperature":304,
+  "process_temperature":313,
+  "rotational_speed":1300,
+  "torque":65,
+  "tool_wear":230
 }
 ```
 
@@ -275,11 +296,12 @@ Frontend dashboard is created using React with TypeScript.
 
 Frontend Features:
 
-- Live machine monitoring UI
-- Sensor value visualization
-- Prediction result display
-- Machine status table
-- Industrial dashboard design
+- Interactive sensor value input
+- Dataset based machine sample display
+- ML prediction result visualization
+- Failure probability dashboard
+- Dark and Light theme switching
+- Responsive industrial dashboard design
 
 
 ---
