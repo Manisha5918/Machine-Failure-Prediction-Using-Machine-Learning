@@ -1,312 +1,374 @@
-# Machine Failure Prediction System using Machine Learning
 
-A Machine Learning based Predictive Maintenance application that predicts industrial machine failures using machine sensor parameters.
+An AI-powered Predictive Maintenance System that predicts industrial machine failure using Machine Learning and real-time sensor data.
 
-The system learns failure patterns from the AI4I 2020 Predictive Maintenance dataset and predicts machine health for new user-provided sensor values through a React dashboard connected with a FastAPI ML backend.
----
-
-##  Project Overview
-
-Unexpected machine failures cause production downtime and maintenance costs in industries.
-
-This project solves the problem by using Machine Learning to predict possible machine failures before they occur.
-
-The application takes machine sensor parameters such as:
-
-- Air Temperature
-- Process Temperature
-- Rotational Speed
-- Torque
-- Tool Wear
-
-and predicts:
-
-- Machine Health Status
-- Failure Risk
-- Failure Probability
-- Maintenance Recommendation
-
-
----
-
-##  Features
-
-✔ Machine Failure Prediction using ML  
-✔ User Input Based Sensor Prediction  
-✔ AI4I Dataset Machine Record Loading  
-✔ Interactive React Monitoring Dashboard  
-✔ Dark / Light Mode Interface  
-✔ Failure Probability Calculation  
-✔ Preventive Maintenance Recommendation  
-✔ FastAPI REST API Model Integration  
-✔ Multiple ML Algorithm Comparison  
-✔ Feature Importance Analysis
-
+The system analyzes machine operating conditions and predicts whether the machine is healthy or has a possible failure risk. It helps industries perform preventive maintenance before unexpected breakdowns occur.
 
 ---
 
 ## Dashboard Preview
 
-
 ![Dashboard](screenshots/dashboard.png)
 
+---
+
+# Project Overview
+
+Industrial machines continuously generate sensor information such as temperature, speed, torque, and tool usage.
+
+Unexpected machine failure can lead to:
+
+- Production downtime
+- Increased maintenance cost
+- Reduced efficiency
+
+This project applies Machine Learning techniques to predict machine failure conditions and provides maintenance recommendations through a web-based monitoring dashboard.
 
 ---
 
-##  Project Architecture
+# Features
 
-
-```
-AI4I 2020 Dataset
-
-          |
-          ↓
-
-Machine Learning Training
-
-          |
-          ↓
-
-Random Forest Model
-(model.pkl + scaler.pkl)
-
-          |
-          ↓
-
-FastAPI Prediction API
-
-          |
-          ↓
-
-React + TypeScript Dashboard
-
-(User Input + Prediction Result)
-```
+- Real-time machine failure prediction
+- Industrial sensor monitoring dashboard
+- Failure probability calculation
+- AI-based maintenance recommendation
+- Interactive slider control
+- Manual sensor value input
+- Light and Dark theme support
+- Machine status monitoring
+- FastAPI backend integration
 
 ---
 
-##  Project Structure
+# Dataset
 
-
-```
-Machine-Failure-Prediction-Using-ML
-
-│
-├── backend
-│   │
-│   ├── main.py
-│   ├── model.pkl
-│   ├── scaler.pkl
-│   └── requirements.txt
-│
-│
-├── frontend
-│   │
-│   ├── src
-│   │   ├── App.tsx
-│   │   ├── App.css
-│   │   └── main.tsx
-│   │
-│   ├── package.json
-│   └── vite.config.ts
-│
-│
-├── ml
-│   │
-│   ├── dataset
-│   │   └── ai4i2020.csv
-│   │
-│   ├── train_model.py
-│   └── notebooks
-│       └── Model_Training.ipynb
-│
-└── README.md
-```
-
----
-
-#  Machine Learning
-
-
-## Dataset
-
-Dataset Used:
+Dataset:
 
 AI4I 2020 Predictive Maintenance Dataset
 
 
-Dataset contains industrial machine sensor records used for predictive maintenance analysis.
+Dataset Size:
 
+```
+Total Records : 10000
 
-### Dataset Information
+Normal Machine Records : 9661
 
-
-| Details | Value |
-|---|---|
-| Total Records | 10,000 |
-| Normal Records | 9,661 |
-| Failure Records | 339 |
-
+Failure Records : 339
+```
 
 ---
 
-## Features Used
+# Input Features
 
+The machine learning model uses:
 
 | Feature | Description |
-|---|---|
+|-|-|
 | Air Temperature | Machine surrounding temperature |
 | Process Temperature | Operating temperature |
 | Rotational Speed | Machine RPM |
-| Torque | Machine force measurement |
+| Torque | Machine load |
 | Tool Wear | Tool usage duration |
-
 
 ---
 
-# ML Workflow
+# Machine Learning Workflow
 
 
 ```
-Dataset Collection
+Dataset
 
-        ↓
+   ↓
 
 Data Cleaning
 
-        ↓
+   ↓
 
 Exploratory Data Analysis
 
-        ↓
+   ↓
 
 Feature Selection
 
-        ↓
+   ↓
+
+Train Test Split
+
+   ↓
 
 Model Training
 
-        ↓
+   ↓
 
-Model Evaluation
+Model Comparison
 
-        ↓
+   ↓
+
+Best Model Selection
+
+   ↓
 
 Model Deployment
+
+   ↓
+
+FastAPI + React Integration
 ```
 
+---
+
+# Data Preprocessing
+
+Performed preprocessing steps:
+
+- Removed unnecessary columns
+- Checked missing values
+- Selected important sensor features
+- Feature scaling using StandardScaler
+- Stratified train-test splitting
 
 ---
 
-# Algorithms Tested
+# Class Imbalance Handling
+
+The dataset contains imbalance:
+
+```
+Healthy Machines : 9661
+
+Failure Machines : 339
+```
+
+Accuracy alone is not enough for this problem.
+
+Methods analyzed:
+
+- SMOTE Oversampling
+- Class Weight Balancing
+- Stratified Splitting
 
 
-The following Machine Learning models were compared:
+Final approach:
+
+```
+RandomForestClassifier(
+class_weight="balanced"
+)
+```
+
+Reason:
+
+Class weight balancing improved failure detection without creating artificial synthetic failure records.
+
+---
+
+# Machine Learning Models Compared
 
 
-- Logistic Regression
-- Decision Tree Classifier
-- Random Forest Classifier
-- Support Vector Machine
-- XGBoost Classifier
+| Algorithm | Accuracy |
+|-|-|
+| Random Forest | 98.5% |
+| XGBoost | 98.4% |
+| Decision Tree | 97.8% |
+| SVM | 97.2% |
+| Logistic Regression | 96.85% |
 
 
 ---
 
-# Final Model
-
+# Final Selected Model
 
 ## Random Forest Classifier
 
+Random Forest was selected because it achieved:
 
-Selected because of better performance and reliability.
+- High accuracy
+- Better failure identification
+- Good precision and recall balance
+- Stable performance on sensor data
+- Lower false predictions
+
+---
+
+# Model Performance Evaluation
 
 
-Model Accuracy:
+Evaluation metrics used:
 
-
-```
-98.4 %
-```
+- Accuracy
+- Precision
+- Recall
+- F1 Score
+- Confusion Matrix
 
 
 ---
 
-# Backend Development
+# Random Forest Classification Report
 
 
-Backend is developed using FastAPI.
-
-The trained machine learning model is loaded using Joblib and connected with REST API endpoints.
-
-
-## API Endpoint
+| Class | Precision | Recall | F1 Score | Support |
+|-|-|-|-|-|
+| Healthy Machine (0) | 0.99 | 1.00 | 0.99 | 1932 |
+| Failure Machine (1) | 0.87 | 0.60 | 0.71 | 68 |
 
 
-### Fetch Dataset Machine Sample
+---
 
-```bash
+# Overall Performance
+
+
+| Metric | Score |
+|-|-|
+| Accuracy | 98% |
+| Macro Precision | 0.93 |
+| Macro Recall | 0.80 |
+| Macro F1 Score | 0.85 |
+| Weighted Precision | 0.98 |
+| Weighted Recall | 0.98 |
+| Weighted F1 Score | 0.98 |
+
+---
+
+# Confusion Matrix
+
+
+```
+                Predicted
+
+             Healthy   Failure
+
+
+Actual Healthy
+
+              1926        6
+
+
+Actual Failure
+
+                27       41
+
+```
+
+
+Explanation:
+
+- Correct Healthy Predictions : 1926
+- Correct Failure Predictions : 41
+- False Failure Alerts : 6
+- Missed Failure Cases : 27
+
+
+---
+
+# System Architecture
+
+
+```
+React Dashboard
+
+        |
+        |
+        ↓
+
+FastAPI Backend
+
+        |
+        |
+        ↓
+
+Machine Learning Model
+
+        |
+        |
+        ↓
+
+Prediction Result
+
+        |
+        |
+        ↓
+
+Maintenance Recommendation
+```
+
+---
+
+# Backend API
+
+
+Backend Framework:
+
+FastAPI
+
+
+## Machine Data API
+
+
+```
 GET /machine
 ```
 
-Fetches machine records from the AI4I dataset.
+
+Returns:
+
+- Machine ID
+- Temperature
+- RPM
+- Torque
+- Tool Wear
 
 
-### Predict Machine Condition
+---
 
-```bash
+
+## Prediction API
+
+
+```
 POST /predict
 ```
 
-Accepts machine sensor values and predicts machine health
 
-Input Example:
+Returns:
 
 
-```json
-{
-  "air_temperature":304,
-  "process_temperature":313,
-  "rotational_speed":1300,
-  "torque":65,
-  "tool_wear":230
-}
 ```
-
-
-Output:
-
-
-```json
 {
-  "prediction":"Failure Risk",
-  "probability":87,
-  "recommendation":"Schedule preventive maintenance"
+Prediction Status,
+
+Failure Probability,
+
+Maintenance Recommendation
 }
 ```
 
 
 ---
 
-# Frontend Development
+# Frontend Dashboard
 
 
-Frontend dashboard is created using React with TypeScript.
+Developed using:
+
+- React
+- TypeScript
+- Axios
+- CSS
 
 
-Frontend Features:
+Dashboard includes:
 
-- Interactive sensor value input
-- Dataset based machine sample display
-- ML prediction result visualization
-- Failure probability dashboard
-- Dark and Light theme switching
-- Responsive industrial dashboard design
+- Sensor input panel
+- Prediction result card
+- Machine status table
+- Theme switching
+- Real-time API communication
 
 
 ---
 
-# Technologies Used
+# Technology Stack
 
 
 ## Machine Learning
@@ -324,37 +386,91 @@ Frontend Features:
 ## Backend
 
 - FastAPI
-- Python
-- REST API
+- Uvicorn
+- Pydantic
 
 
 ## Frontend
 
 - React
 - TypeScript
-- Vite
+- Axios
 - CSS
 
 
 ---
 
-# Installation & Setup
+# Project Structure
+
+
+```
+AI-Predictive-Maintenance
+
+│
+├── backend
+│
+│   ├── main.py
+│   ├── model.pkl
+│   ├── scaler.pkl
+│   └── requirements.txt
+│
+│
+├── frontend
+│
+│   └── src
+│
+│       ├── App.tsx
+│       └── App.css
+│
+│
+├── ml
+│
+│   ├── dataset
+│   └── model_training.ipynb
+│
+│
+├── screenshots
+│
+│   └── dashboard.png
+│
+└── README.md
+
+```
+
+
+---
+
+# How To Run
 
 
 ## Backend
 
 
+Move to backend folder:
+
+
 ```bash
 cd backend
-
-pip install -r requirements.txt
-
-uvicorn main:app --reload
 ```
 
 
-Backend runs on:
+Install dependencies:
 
+
+```bash
+pip install -r requirements.txt
+```
+
+
+Run server:
+
+
+```bash
+python -m uvicorn main:app --reload
+```
+
+
+Server:
 
 ```
 http://127.0.0.1:8000
@@ -366,17 +482,31 @@ http://127.0.0.1:8000
 ## Frontend
 
 
+Move to frontend:
+
+
 ```bash
 cd frontend
+```
 
+
+Install packages:
+
+
+```bash
 npm install
+```
 
+
+Start React:
+
+
+```bash
 npm run dev
 ```
 
 
-Frontend runs on:
-
+Application:
 
 ```
 http://localhost:5173
@@ -385,18 +515,47 @@ http://localhost:5173
 
 ---
 
+# Sample Prediction Output
+
+
+```
+Machine Status:
+
+Healthy Machine
+
+
+Failure Probability:
+
+4.62%
+
+
+Recommendation:
+
+Machine condition is normal.
+Continue monitoring.
+
+```
+
+
+---
+
 # Future Improvements
 
 
-- Cloud Deployment
-- Database Integration
-- Real Industrial IoT Sensor Connection
-- Authentication System
-- Historical Failure Analytics
-- Deep Learning Models
+- IoT sensor integration
+- Real-time industrial data streaming
+- Cloud deployment
+- Alert notification system
+- Deep learning based prediction
 
 
+---
+
+# Conclusion
 
 
+The AI Predictive Maintenance System successfully predicts machine failure risks using industrial sensor data.
 
+The integration of Machine Learning, FastAPI, and React provides a complete end-to-end intelligent monitoring solution for preventive maintenance.
 
+---
